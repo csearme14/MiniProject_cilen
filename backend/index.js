@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt')
 
 const db = require('./database.js')
 let users = db.users
-
+let Blacklists = db.Blacklists
 require('./passport.js')
 
 const router = require('express').Router(),
@@ -28,9 +28,16 @@ router.post('/login', (req, res, next) => {
         console.log('Login: ', req.body, user, err, info)
         if (err) return next(err)
         if (user) {
+            console.log("Body:",req.body);
+            if (req.body.remember == true) {
+              exp = "7d";
+            } else exp = "1d";
             const token = jwt.sign(user, db.SECRET, {
-                expiresIn: '1d'
-            })
+                expiresIn: exp,
+            });
+            var decoded = jwt.decode(token);
+            let time = new Date(decoded.exp * 1000);
+            console.log(new Date(decoded.exp * 1000));
             // req.cookie.token = token
             res.setHeader(
                 "Set-Cookie",
@@ -49,7 +56,7 @@ router.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
-router.get('/logout', (req, res) => { 
+router.get('/logout', (req, res) => {
     res.setHeader(
         "Set-Cookie",
         cookie.serialize("token", '', {
@@ -71,21 +78,15 @@ router.get('/profile',
         res.send(req.user)
     });
 
-// เพิ่ม /foo เข้าไป
-router.get('/foo',
-    passport.authenticate('jwt', { session: false }),
-    (req, res, next) => {
-        res.send(req.user)
-        res.send('foo');
-    });
+
 
 router.post('/register',
     async (req, res) => {
         try {
             const SALT_ROUND = 10
-            const { username, email, password } = req.body 
+            const { username, email, password } = req.body
             if (!username || !email || !password)
-                return res.json( {message: "Cannot register with empty string"})
+                return res.json({ message: "Cannot register with empty string" })
             if (db.checkExistingUser(username) !== db.NOT_FOUND)
                 return res.json({ message: "Duplicated user" })
 
@@ -98,11 +99,51 @@ router.post('/register',
         }
     })
 
-router.get('/alluser', (req,res) => res.json(db.users.users))
+router.get('/alluser', (req, res) => res.json(db.users.users))
 
 router.get('/', (req, res, next) => {
     res.send('Respond without authentication');
 });
+
+
+
+
+
+router.route('/Blacklists')
+ .get ((req,res)=>{
+     console.log(Blacklists)
+     res.json(Blacklists);
+ })
+
+ .post ((req,res)=>{
+    let id = (Blacklists.list.length)?Blacklists.list[Blacklists.list.length-1].id+1:1
+     let name = req.body.name
+     let details = req.body.details
+     let cooking  = req.body.cooking 
+     let cost  = req.body.cost
+     Blacklists.list = [...Blacklists.list,{id,name,details,cooking ,cost }]
+     res.json(Blacklists);
+ })
+
+ router.route('/Blacklists/:rc_id')
+  .get((req,res)=>{
+    let id = Blacklists.list.findIndex((item) => (item.id === +req.params.rc_id))
+    res.json(Blacklists.list[id]);
+  })
+
+  .put((req,res)=>{
+      let id = Blacklists.list.findIndex((item) => (item.id === +req.params.rc_id))
+      Blacklists.list[id].name = req.body.name
+      Blacklists.list[id].products = req.body.products
+      Blacklists.list[id].details  = req.body.details 
+      Blacklists.list[id].cost  = req.body.cost
+      res.json(Blacklists)
+  })
+
+  .delete((req,res)=>{
+    Blacklists.list = Blacklists.list.filter((item) => item.id !== +req.params.rc_id)
+      res.json(Blacklists);
+  })
 
 // Error Handler
 app.use((err, req, res, next) => {
