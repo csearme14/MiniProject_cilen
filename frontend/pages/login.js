@@ -11,6 +11,7 @@ export default function Login({ token }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [status, setStatus] = useState('')
+    const[remember, setRemember] = useState(false)
 
     const login = async (req, res) => {
         try {
@@ -49,9 +50,22 @@ export default function Login({ token }) {
                     placeholder="password"
                     onChange={(e) => setPassword(e.target.value)} />
             </div>
+            <div >
+                <input type="checkbox"
+                 name="remember"
+                 id="remember"
+                 onClick={rememberStatus}/>
+           </div> 
+           <div>
+               <label>Remember Me</label>
+           </div>
         </div>
     )
 
+    const rememberStatus = async () =>{
+        setRemember(true)
+    }
+    
     const copyText = () => {
         navigator.clipboard.writeText(token)
     }
@@ -64,9 +78,7 @@ export default function Login({ token }) {
             <div className={styles.container}>
                 <Navbar />
                 <h1>Login</h1>
-                <div><b>Token:</b> {token.substring(0, 15)}...
-                <button onClick={copyText}> Copy token </button>
-                </div>
+               
                 <br/>
                 <div>
                     Status:  {status}
@@ -74,7 +86,7 @@ export default function Login({ token }) {
                 <br />
                 {loginForm()}
                 <div>
-                    <button onClick={login}>Login</button>
+                    <button className={styles.buttoncolorLogin} onClick={login}>Login</button>
                 </div>
             </div>
         </Layout>

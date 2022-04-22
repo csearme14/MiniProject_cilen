@@ -15,3 +15,5 @@ const withAuth = WrappedComponent => {
 }
 
 export default withAuth
+
+
