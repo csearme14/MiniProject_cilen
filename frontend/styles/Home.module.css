@@ -5,6 +5,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color:#eefb00;
+    /* 1 */
 }
 
 .content {
@@ -17,13 +19,17 @@
     /* grid-gap: 2px; */
     /* background-color: #2196F3; */
     margin-bottom: 16px;
+    background-color:#eefb00;
+    /* 1 */
 }
 
 .gridContainer>div {
-    background-color: rgba(255, 255, 255, 0.8);
+    /* background-color: rgba(255, 255, 255, 0.8); */
     text-align: left;
     padding: 10px 0;
     font-size: 1.2rem;
+    background-color:#eefb00;
+    /* 1 */
 }
 
 .gridContainer>div>input {
@@ -32,4 +38,75 @@
     margin: 0px 0;
     box-sizing: border-box;
     font-size: 1.2rem;
+    /* background-color:#BBE2D7; */
+}
+
+.buttoncolorReg {
+    border: none;
+    color:black;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin:  0px 0;
+    cursor: pointer;
+    border-radius: 10%;
+    background-color:#37ec00;
+}
+
+.buttoncolorLogin {
+    border: none;
+    color:black;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin:  0px 0;
+    cursor: pointer;
+    border-radius: 10%;
+    background-color:#61aee9;
+}
+
+.buttoncolor {
+    border: none;
+    color:black;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin:  0px 0;
+    cursor: pointer;
+    border-radius: 10%;
+    background-color:#37ec00;
+    /* หน้า add */
+}
+
+.listItem {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    width: 30%;
+    border: 4px solid rgb(191, 1, 201);
+    font-size: 1.2rem;
+    background-color:#FCDEE2;
+    /* กล่องที่โชว์ */
+ }
+ 
+ .list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 10px;
+    padding: 20px;
+    flex-wrap: wrap;
+    width: 80vw;
+    /* border: 2px solid red; */
+ }
+ 
+ .background {
+  
 }

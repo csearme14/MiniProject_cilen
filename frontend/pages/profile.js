@@ -12,10 +12,10 @@ const Profile1 = ({ token }) => {
     const [user, setUser] = useState({})
 
     useEffect(() => {
-        profileUser()
+        Contact()
     }, [])
 
-    const profileUser = async () => {
+    const Contact = async () => {
         try {
             // console.log('token: ', token)
             const users = await axios.get(`${config.URL}/profile`, {
@@ -29,25 +29,30 @@ const Profile1 = ({ token }) => {
         }
 
     }
+
  
-    return (
+    return (   
         <Layout>
             <Head>
-                <title>User profile</title>
+                <title>Contact</title>
             </Head>
+            
             <div className={styles.container}>
-                <Navbar />
-                <h1>User profile</h1>
-                <div>
-                    <b>Token:</b> {token.substring(0, 15)}... <br /><br />
-                    This route is protected by token, user is required to login first.
-                    <br/>
-                    Otherwise, it will be redirect to Login page
-                    <br/><br/>
-                    {JSON.stringify(user)}
-                </div>
+            <Navbar />
+            <h1 class="ml-3 pt-5 py-4 justify-center text-indigo-800 text-3xl drop-shadow-lg text-lg font-medium leading-6 text-gray-900 ">Contact</h1>
+            <br></br>
+            <a href='https://www.facebook.com/Chalisa.Sinban'>
+            <img src="https://scontent.furt2-1.fna.fbcdn.net/v/t1.6435-9/131117286_3274532816007714_3236096361346744454_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=zhiMN-S38RoAX8YQ4zu&_nc_ht=scontent.furt2-1.fna&oh=00_AT-w8lbQ14vpPVcVyWtQl0xr9U1vsrN7S2ovlkTy-drPjg&oe=6288BC77" width={300} height={200} />
+            </a> 
+            <br></br>
+            <h3 class="text-xl font-medium text-gray-900 dark:text-gray-800">Chalisa Sinban 6135512020</h3>
+            <br></br>
             </div>
+            
+            
         </Layout>
+   
+        
     )
 }
 
